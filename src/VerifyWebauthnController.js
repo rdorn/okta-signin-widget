@@ -21,7 +21,7 @@ import FormController from 'util/FormController';
 import FormType from 'util/FormType';
 import webauthn from 'util/webauthn';
 import HtmlErrorMessageView from 'views/mfa-verify/HtmlErrorMessageView';
-import FooterSignout from 'views/shared/FooterSignout';
+import FooterMFA from 'views/shared/FooterMFA';
 
 function getAllowCredentials (factors) {
   const allowCredentials = [];
@@ -216,5 +216,5 @@ export default FormController.extend({
     // More details in OKTA-135060.
   },
 
-  Footer: FooterSignout,
+  Footer: FooterMFA,
 });
