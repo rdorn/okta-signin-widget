@@ -190,6 +190,7 @@
                   }
                 },
                 "relatesTo": "$.authenticators.value[6]"
+              }
             ]
           },
           {

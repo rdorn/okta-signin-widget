@@ -1270,6 +1270,8 @@ describe('v2/ion/i18nTransformer', function () {
         }
       ]
     });
+  });
+
   it('gets message key', () => {
     const message =
     {
