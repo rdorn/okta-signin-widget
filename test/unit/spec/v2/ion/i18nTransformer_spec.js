@@ -1,5 +1,6 @@
 import { _ } from 'okta';
 import i18nTransformer from 'v2/ion/i18nTransformer';
+import { getMessageKey } from 'v2/ion/i18nTransformer';
 import Bundles from 'util/Bundles';
 
 describe('v2/ion/i18nTransformer', function () {
@@ -1269,5 +1270,15 @@ describe('v2/ion/i18nTransformer', function () {
         }
       ]
     });
+  it('gets message key', () => {
+    const message =
+    {
+      'message': 'An activation email has been sent to john@gmail.com.',
+      'i18n': {
+        'key': 'idx.email.verification.required'
+      },
+      'class': 'INFO'
+    };
+    expect(getMessageKey(message)).toEqual('idx.email.verification.required');
   });
 });

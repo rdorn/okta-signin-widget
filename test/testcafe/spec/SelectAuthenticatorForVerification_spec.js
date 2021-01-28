@@ -10,6 +10,7 @@ import xhrSelectAuthenticatorsRecovery from '../../../playground/mocks/data/idp/
 import xhrAuthenticatorRequiredPassword from '../../../playground/mocks/data/idp/idx/authenticator-verification-password';
 import xhrAuthenticatorRequiredEmail from '../../../playground/mocks/data/idp/idx/authenticator-verification-email';
 import xhrAuthenticatorRequiredWebauthn from '../../../playground/mocks/data/idp/idx/authenticator-verification-webauthn';
+import xhrAuthenticatorRequiredOnPremMfa from '../../../playground/mocks/data/idp/idx/authenticator-verification-on-prem';
 import xhrAuthenticatorOVTotp from '../../../playground/mocks/data/idp/idx/authenticator-verification-okta-verify-totp';
 import xhrAuthenticatorOVPush from '../../../playground/mocks/data/idp/idx/authenticator-verification-okta-verify-push';
 import xhrAuthenticatorOVFastPass from '../../../playground/mocks/data/idp/idx/authenticator-verification-okta-verify-signed-nonce-loopback';
@@ -77,6 +78,12 @@ const mockChallengeOVFastPass = RequestMock()
   .onRequestTo('http://localhost:3000/idp/idx/challenge')
   .respond(xhrAuthenticatorOVFastPass);
 
+const mockChallengeOnPremMFA = RequestMock()
+  .onRequestTo('http://localhost:3000/idp/idx/introspect')
+  .respond(xhrSelectAuthenticators)
+  .onRequestTo('http://localhost:3000/idp/idx/challenge')
+  .respond(xhrAuthenticatorRequiredOnPremMfa);
+
 fixture('Select Authenticator for verification Form');
 
 async function setup(t) {
@@ -140,6 +147,12 @@ test.requestHooks(mockChallengePassword)('should load select authenticator list'
   await t.expect(selectFactorPage.getFactorIconClassByIndex(7)).contains('mfa-google-auth');
   await t.expect(selectFactorPage.getFactorSelectButtonByIndex(7)).eql('Select');
   await t.expect(selectFactorPage.getFactorSelectButtonDataSeByIndex(7)).eql('google_authenticator');
+
+  await t.expect(selectFactorPage.getFactorLabelByIndex(8)).eql('Atko Custom On-prem');
+  await t.expect(await selectFactorPage.factorDescriptionExistsByIndex(8)).eql(false);
+  await t.expect(selectFactorPage.getFactorIconClassByIndex(8)).contains('mfa-onprem');
+  await t.expect(selectFactorPage.getFactorSelectButtonByIndex(8)).eql('Select');
+  await t.expect(selectFactorPage.getFactorSelectButtonDataSeByIndex(8)).eql('del_oath');
 
   // signout link at enroll page
   await t.expect(await selectFactorPage.signoutLinkExists()).ok();
@@ -409,4 +422,13 @@ test.requestHooks(requestLogger, mockChallengeOVFastPass)('should navigate to ok
     },
     'stateHandle': '02im-3M2f6UXHgNfS7Ns7C85EKHzGaKw0u1CC4p9_r'
   });
+});
+
+test.requestHooks(mockChallengeOnPremMFA)('should navigate to on prem mfa challenge page', async t => {
+  const selectFactorPage = await setup(t);
+  await t.expect(selectFactorPage.getFormTitle()).eql('Verify it\'s you with an authenticator');
+
+  selectFactorPage.selectFactorByIndex(7);
+  const challengeFactorPage = new ChallengeFactorPageObject(t);
+  await t.expect(challengeFactorPage.getPageTitle()).eql('Verify with Atko Custom On-prem');
 });
