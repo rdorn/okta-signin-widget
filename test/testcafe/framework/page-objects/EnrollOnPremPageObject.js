@@ -2,7 +2,6 @@ import BasePageObject from './BasePageObject';
 
 const PASSCODE_FIELD_NAME = 'credentials.passcode';
 const USER_NAME_FIELD_NAME = 'credentials.userName';
-const FORM_INFOBOX_WARNING = '.okta-form-infobox-warning';
 const FORM_INFOBOX_ERROR = '.o-form-error-container .infobox-error';
 
 export default class EnrollOnPremPageObject extends BasePageObject {
