@@ -96,7 +96,7 @@ test.requestHooks(mockChallengePassword)('should load select authenticator list'
   const selectFactorPage = await setup(t);
   await t.expect(selectFactorPage.getFormTitle()).eql('Verify it\'s you with an authenticator');
   await t.expect(selectFactorPage.getFormSubtitle()).eql('Select from the following options');
-  await t.expect(selectFactorPage.getFactorsCount()).eql(8);
+  await t.expect(selectFactorPage.getFactorsCount()).eql(9);
 
   await t.expect(selectFactorPage.getFactorLabelByIndex(0)).eql('Password');
   await t.expect(await selectFactorPage.factorDescriptionExistsByIndex(0)).eql(false);

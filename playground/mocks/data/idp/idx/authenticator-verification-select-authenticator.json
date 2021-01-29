@@ -265,6 +265,7 @@
                   }
                 },
                 "relatesTo": "$.authenticatorEnrollments.value[9]"
+              }
             ]
           },
           {
