@@ -103,6 +103,7 @@ const I18N_OVERRIDE_MAPPINGS = {
   'challenge-authenticator.okta_verify.credentials.totp': 'oie.okta_verify.totp.enterCodeText',
   'challenge-authenticator.google_authenticator.credentials.otp': 'oie.google_authenticator.otp.enterCodeText',
   'challenge-authenticator.del_oath.credentials.passcode': 'oie.on_prem.verify.passcode.label',
+
   'enroll-profile.userProfile.lastName': 'oie.user.profile.lastname',
   'enroll-profile.userProfile.firstName': 'oie.user.profile.firstname',
   'enroll-profile.userProfile.email': 'oie.user.profile.primary.email',
@@ -245,7 +246,7 @@ const getMessage = (message) => {
  * @param {Message} message
  */
 const getMessageKey = (message) => {
-  return message.i18n?.key || '';
+  return message?.i18n?.key || '';
 };
 
 const uiSchemaLabelTransformer = (transformedResp) => {
