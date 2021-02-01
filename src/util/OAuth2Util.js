@@ -29,11 +29,8 @@ util.getTokens = function (settings, params, controller) {
   }
 
   function error (error) {
-    // OKTA-104330- Handle error case where user is not assigned to OIDC client
-    if (error.errorCode === 'access_denied') {
-      controller.model.trigger('error', controller.model, { responseJSON: error });
-      controller.model.appState.trigger('removeLoading');
-    }
+    controller.model.trigger('error', controller.model, { responseJSON: error });
+    controller.model.appState.trigger('removeLoading');
     Util.triggerAfterError(controller, new Errors.OAuthError(error.message), settings);
   }
 
